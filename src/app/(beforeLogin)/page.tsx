@@ -1,11 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "@emotion/styled";
 import Image from "next/image";
 import zLogo from "../../../public/zlogo.png";
+import { useOverlay } from "@toss/use-overlay";
+import LoginModal from "@/components/LoginModal";
 
 const MainPage = () => {
+  const overlay = useOverlay();
+
+  const SignUpModal = useCallback(() => {
+    overlay.open(({ isOpen, close }) => (
+      <LoginModal isOpen={isOpen} onClose={close} />
+    ));
+  }, [overlay]);
+
+  const OpenLoginModal = useCallback(() => {
+    overlay.open(({ isOpen, close }) => (
+      <LoginModal isOpen={isOpen} onClose={close} />
+    ));
+  }, [overlay]);
+
   return (
     <StyledMainPage>
       <StyledLeft>
@@ -14,9 +30,11 @@ const MainPage = () => {
       <StyledRight>
         <StyledTitle>지금 일어나고 있는 일</StyledTitle>
         <StyledSubTitle>지금 가입하세요.</StyledSubTitle>
-        <StyledSignup>계정 만들기</StyledSignup>
+        <StyledSignupButton onClick={SignUpModal}>
+          계정 만들기
+        </StyledSignupButton>
         <StyledTag>이미 트위터에 가입하셨나요?</StyledTag>
-        <StyledLogin>로그인</StyledLogin>
+        <StyledLoginButton onClick={OpenLoginModal}>로그인</StyledLoginButton>
       </StyledRight>
     </StyledMainPage>
   );
@@ -46,7 +64,7 @@ const StyledRight = styled.div`
   justify-content: center;
 `;
 
-const StyledSignup = styled.div`
+const StyledSignupButton = styled.div`
   width: 300px;
   height: 40px;
   border-radius: 20px;
@@ -59,13 +77,14 @@ const StyledSignup = styled.div`
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 
   &:hover {
     background-color: rgb(24, 131, 203);
   }
 `;
 
-const StyledLogin = styled.div`
+const StyledLoginButton = styled.div`
   width: 300px;
   height: 40px;
   border-radius: 20px;
@@ -77,6 +96,7 @@ const StyledLogin = styled.div`
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 
   &:hover {
     background-color: rgb(210, 237, 255);
