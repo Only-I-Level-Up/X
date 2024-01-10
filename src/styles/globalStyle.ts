@@ -8,6 +8,7 @@ const GlobalStyle = css`
     font: inherit;
     vertical-align: baseline;
     text-decoration: none;
+    background-color: white;
   }
 
   input::-webkit-search-decoration,
